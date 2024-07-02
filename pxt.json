@@ -1,0 +1,28 @@
+{
+    "name": "watch",
+    "description": "",
+    "dependencies": {
+        "core": "*",
+        "radio": "*",
+        "microphone": "*",
+        "neopixel": "github:microsoft/pxt-neopixel#v0.7.5",
+        "pxt-watchfont": "github:hokarimasahiro/pxt-watchfont#7d5f615ff814a5695558fc6d255ee50759d251b5",
+        "pxt-ds3231": "github:hokarimasahiro/pxt-ds3231#90cd86b5d0c0f2c105f75efd5d6de3489231341a"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "target": "6.0.28",
+        "targetId": "microbit"
+    },
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "blocksprj"
+}
