@@ -3,15 +3,15 @@ function LED消灯 () {
     strip.show()
 }
 function 時刻送信 () {
-    ds3231.getClock()
+    rtc.getClock()
     serial.writeNumbers([
-    ds3231.getClockData(clockData.year),
-    ds3231.getClockData(clockData.month),
-    ds3231.getClockData(clockData.day),
-    ds3231.getClockData(clockData.weekday),
-    ds3231.getClockData(clockData.hour),
-    ds3231.getClockData(clockData.minute),
-    ds3231.getClockData(clockData.second)
+    rtc.getClockData(clockData.year),
+    rtc.getClockData(clockData.month),
+    rtc.getClockData(clockData.day),
+    rtc.getClockData(clockData.weekday),
+    rtc.getClockData(clockData.hour),
+    rtc.getClockData(clockData.minute),
+    rtc.getClockData(clockData.second)
     ])
 }
 function コントローラ処理 () {
@@ -32,13 +32,13 @@ function コントローラ処理 () {
     basic.pause(50)
 }
 function 時計設定 (データ: string[]) {
-    ds3231.setClockData(clockData.year, parseFloat(データ[1]))
-    ds3231.setClockData(clockData.month, parseFloat(データ[2]))
-    ds3231.setClockData(clockData.day, parseFloat(データ[3]))
-    ds3231.setClockData(clockData.hour, parseFloat(データ[4]))
-    ds3231.setClockData(clockData.minute, parseFloat(データ[5]))
-    ds3231.setClockData(clockData.second, parseFloat(データ[6]))
-    ds3231.setClock()
+    rtc.setClockData(clockData.year, parseFloat(データ[1]))
+    rtc.setClockData(clockData.month, parseFloat(データ[2]))
+    rtc.setClockData(clockData.day, parseFloat(データ[3]))
+    rtc.setClockData(clockData.hour, parseFloat(データ[4]))
+    rtc.setClockData(clockData.minute, parseFloat(データ[5]))
+    rtc.setClockData(clockData.second, parseFloat(データ[6]))
+    rtc.setClock()
 }
 function 音通信処理 () {
     if (input.buttonIsPressed(Button.A)) {
@@ -89,8 +89,8 @@ function ボタン番号 () {
 }
 function 時計処理 () {
     basic.pause(100)
-    ds3231.getClock()
-    if (ds3231.getClockData(clockData.minute) == 0 && ds3231.getClockData(clockData.second) == 0) {
+    rtc.getClock()
+    if (rtc.getClockData(clockData.minute) == 0 && rtc.getClockData(clockData.second) == 0) {
         pins.digitalWritePin(DigitalPin.P2, 1)
         basic.pause(200)
         pins.digitalWritePin(DigitalPin.P2, 0)
@@ -116,7 +116,7 @@ function 時計初期化 () {
     pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
     pins.setPull(DigitalPin.P13, PinPullMode.PullUp)
     LED初期化()
-    ds3231.getClock()
+    rtc.getClock()
     時刻表示(0)
 }
 serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
@@ -187,7 +187,7 @@ function バイブレーション () {
 }
 function 秒表示 () {
     表示方向()
-    watchfont.showNumber2(ds3231.getClockData(clockData.second))
+    watchfont.showNumber2(rtc.getClockData(clockData.second))
 }
 function コントローラ初期化 () {
     無線グループ = Math.abs(control.deviceSerialNumber()) % 98 + 1
@@ -213,16 +213,16 @@ function 時刻表示 (タイプ: number) {
     時刻送信()
     if (タイプ == 0) {
         表示方向()
-        watchfont.showNumber2(ds3231.getClockData(clockData.hour))
+        watchfont.showNumber2(rtc.getClockData(clockData.hour))
         basic.pause(1000)
         basic.clearScreen()
         basic.pause(200)
-        watchfont.showNumber2(ds3231.getClockData(clockData.minute))
+        watchfont.showNumber2(rtc.getClockData(clockData.minute))
         basic.pause(1000)
         basic.clearScreen()
         basic.pause(500)
     } else if (タイプ == 1) {
-        basic.showString("" + ds3231.getClockData(clockData.hour) + ":" + ds3231.getClockData(clockData.minute))
+        basic.showString("" + rtc.getClockData(clockData.hour) + ":" + rtc.getClockData(clockData.minute))
     }
 }
 let 受信文字: string[] = []
